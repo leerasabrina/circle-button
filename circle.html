@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>circle-click</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.24/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex justify-between w-1/2">
+    <div class="btn-div">
+        <button class="w-4 h-4 border-2 border-transparent rounded-full bg-orange-500"></button>
+        <button class="w-4 h-4 border-2 border-transparent rounded-full bg-blue-500"></button>
+        <button class="w-4 h-4 border-2 border-transparent rounded-full bg-teal-800"></button>
+    </div>
+    <div class="flex  img-div">
+        <img class="hidden" src="assets/send1.png" alt="">
+        <img class="hidden" src="assets/Group.png" alt="">
+        <img class="hidden" src="assets/transaction1.png" alt="">
+    </div>
+    <script>
+      let buttons =  document.querySelectorAll('.btn-div button');
+      let images = document.querySelectorAll('.img-div img');
+
+      for(let i = 0;i<buttons.length;i++){
+         buttons[i].addEventListener('click',function(){
+            buttons.forEach(btn => btn.classList.remove('border-teal-200'));
+           buttons[i].classList.add('border-teal-200');
+           images.forEach(img => img.classList.add('hidden'));
+           images[i].classList.remove('hidden');
+         })
+      }
+    </script>
+</body>
+</html>

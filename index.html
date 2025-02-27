@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payoo</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.24/dist/full.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="lg:bg-black lg:py-4">
+<header class="lg:w-2/5 mx-auto  ">
+    <section class=" bg-slate-100 ">
+       
+        <img class="w-1/2 ml-24 lg:ml-24 top-32 lg:top-24 relative" src="assets/bg.png" alt="">
+        <img class="relative w-1/6 left-40 -top-10 " src="assets/Group.png" alt="">
+    
+    
+    
+        <div class="hero bg-slate-100 ">
+            <div class="hero-content flex-col lg:flex-row-reverse">
+              <div class="card  w-full max-w-sm shrink-0 shadow-2xl">
+                <form class="card-body">
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text">Phone</span>
+                    </label>
+                    <!-- input of phone -->
+                    <input id="inp-phone" type="number" placeholder="Phone number" class="input input-bordered" required />
+
+                  </div>
+                  <div class="form-control">
+                    <label class="label">
+                      <span class="label-text text-xl font-semibold">Pin</span>
+                    </label>
+                    <!-- input of pin -->
+                    <input id="inp-pin" type="password" placeholder="4-digit pin" class="input input-bordered" required />
+                    
+                  </div>
+                  <div class="form-control mt-6">
+                    <button type="button" id="first-btn" class="btn btn-primary">Login</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+    </section>
+</header>
+
+<script src="script/convert.js"></script>
+  <script src="script/script.js"></script>  
+</body>
+</html>

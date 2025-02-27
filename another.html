@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>another</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.24/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="lg:bg-black lg:py-4">
+    <header class="lg:w-2/5 mx-auto bg-slate-100 lg:p-4">
+        <nav class="flex justify-between items-center ">
+            <div class="flex ">
+                <img class="w-1/5" src="assets/Group.png" alt="">
+                <div class="ml-4">
+                    <h2 class="text-xl font-semibold">$<span id="main-balance">4500</span></h2>
+                    <p class="text-slate-400">Available Balance</p>
+                </div>
+            </div>
+            <button id="logout-btn" class="border-2 rounded-xl w-20 h-8 ml-9 border-slate-300 text-slate-400">Log
+                Out</button>
+            <hr class="text-slate-500">
+        </nav>
+        <section class="bg-slate-100">
+            <h1>Welcome to payoo!</h1>
+            <p>Enjoy easy and convenient financial services with us. Cashout charge is low and </p>
+            <div class="grid lg:grid-cols-3 grid-cols-1">
+                <!-- add money -->
+                <div class="border-2 border-slate-400 p-4" id="add-money">
+                    <img src="assets/money1.png" alt="">
+                    <p>Add money</p>
+                </div>
+                <!-- cashout -->
+                <div class="border-2 border-slate-400 p-4" id="cash-out">
+                    <img src="assets/purse1.png" alt="">
+                    <p>Cashout</p>
+                </div>
+                <!-- transfer -->
+                <div class="border-2 border-slate-400 p-4" id="transfer">
+                    <img src="assets/send1.png" alt="">
+                    <p>Transfer money</p>
+                </div>
+                <!-- bonus -->
+                <div class="border-2 border-slate-400 p-4" id="bonus">
+                    <img src="assets/wallet1.png" alt="">
+                    <p>Get Bonus</p>
+                </div>
+                <!--pay bill  -->
+                <div class="border-2 border-slate-400 p-4" id="pay-bill">
+                    <img src="assets/money1.png" alt="">
+                    <p>Pay bill</p>
+                </div>
+                <!-- transection -->
+                <div class="border-2 border-slate-400 p-4" id="transection">
+                    <img src="assets/transaction1.png" alt="">
+                    <p>Transections</p>
+                </div>
+
+            </div>
+
+            <!-- add money form -->
+            <div id="addMoney" class=" hero bg-base-200 min-h-screen ">
+                <div class="hero-content flex-col lg:flex-row-reverse">
+
+                    <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+                        <form class="card-body">
+                            <div class="form-control">
+                                <legend>Select a bank</legend>
+                                <select id="select" class="select select-bordered w-full max-w-xs">
+
+                                    <option disabled selected>Select A Bank</option>
+                                    <option>Bkash</option>
+                                    <option>Upay</option>
+                                    <option>Rocket</option>
+                                </select>
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Account number</span>
+                                </label>
+                                <!-- account -->
+                                <input id="account" type="text" placeholder="enter your account number" class="input input-bordered"
+                                    required />
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Amount of money</span>
+                                </label>
+                                <!-- amount -->
+                                <input id="amount" type="text" placeholder="add amount to withdraw" class="input input-bordered"
+                                    required />
+                            </div>
+
+
+
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Password</span>
+                                </label>
+                                <!-- password -->
+                                <input id="password" type="password" placeholder="password" class="input input-bordered" required />
+
+                            </div>
+                            <div class="form-control mt-6">
+                                <button id="added-btn" type="submit" class="btn btn-primary">Add money</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header>
+    <!-- <script>
+    document.getElementById('logout-btn').addEventListener('click',()=>{
+    window.location.href = 'index.html';
+})
+   </script> -->
+    <script src="script/convert.js"></script>
+    <script src="script/script.js" defer></script>
+    <script src="script/toggle.js"></script>
+    <script src="script/addmoney.js"></script>
+</body>
+
+</html>
