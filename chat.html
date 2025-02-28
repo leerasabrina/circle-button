@@ -1,188 +1,159 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Buttons</title>
-  <style>
-    /* CSS Styles */
-    .hidden {
-      display: none;
-    }
-
-    .circle-btn {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      margin: 5px;
-      border: 3px solid transparent;
-      cursor: pointer;
-    }
-
-    .circle-btn.selected {
-      border: 3px solid red;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    #add-to-cart {
-      margin-top: 10px;
-    }
-
-    #cart-info {
-      margin-top: 10px;
-    }
-
-    #modal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: white;
-      padding: 20px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    #modal p {
-      margin: 5px 0;
-    }
-
-    #close-modal {
-      margin-top: 10px;
-      background-color: #f44336;
-      color: white;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>circle-click</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.24/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <!-- HTML Content -->
-  <div class="circle-buttons">
-    <button class="circle-btn" data-image="img1.jpg" data-color="Red" data-price="60" style="background-color: red;"></button>
-    <button class="circle-btn" data-image="img2.jpg" data-color="Blue" data-price="60" style="background-color: blue;"></button>
-    <button class="circle-btn" data-image="img3.jpg" data-color="Green" data-price="60" style="background-color: green;"></button>
-    <button class="circle-btn" data-image="img4.jpg" data-color="Yellow" data-price="60" style="background-color: yellow;"></button>
-  </div>
 
-  <div class="image-display">
-    <img src="img1.jpg" id="displayed-image" alt="Selected Image">
-  </div>
+<body class="flex justify-between flex-col gap-10 w-1/2">
+    <!-- circle btn -->
+    <div class="btn-div">
+        <button id="orange" class="w-4 h-4 border-2 border-transparent rounded-full bg-orange-500"></button>
+        <button id="blue" class="w-4 h-4 border-2 border-transparent rounded-full bg-blue-500"></button>
+        <button id="teal" class="w-4 h-4 border-2 border-transparent rounded-full bg-teal-800"></button>
+    </div>
+    <!-- images -->
+    <div class="flex img-div">
+        <img class="hidden" src="assets/send1.png" alt="">
+        <img class="hidden" src="assets/Group.png" alt="">
+        <img class="hidden" src="assets/transaction1.png" alt="">
+    </div>
+    <!-- square btn -->
+    <div class="square-btn">
+        <button class="p-4 border-2 border-transparent bg-slate-200 border border-slate-400">s $40</button>
+        <button class="p-4 border-2 border-transparent bg-slate-200 border border-slate-400">m $42</button>
+        <button class="p-4 border-2 border-transparent bg-slate-200 border border-slate-400">xl $44</button>
+        <button class="p-4 border-2 border-transparent bg-slate-200 border border-slate-400">xxl $46</button>
+    </div>
+    <!-- +/-btn -->
+    <div id="quantity-div" class="flex w-32 p-2 text-xl justify-between items-center border-2 border-slate-300">
+        <button class="w-8" id="minus">-</button><span id="result">0</span><button class="w-8" id="plus">+</button>
+    </div>
+    <!-- cart btn -->
+    <div class="submit">
+        <button class="p-6 bg-orange-500">Add to cart</button>
+    </div>
+    <!-- hide button -->
+    <div>
+        <button id="hide-btn" class="bg-slate-200 p-2 hidden">Shopping details <span id="history" class="w-10 inline-block rounded-full bg-orange-500 text-white">0</span></button>
+    </div>
+    <!-- modal -->
+    <div class="hidden" id="modal">
+        <table>
+            <thead>
+                <tr>
+                    <td class="pr-10 font-bold">image</td>
+                    <td class="pr-10 font-bold">color</td>
+                    <td class="pr-10 font-bold">quantity</td>
+                    <td class="pr-10 font-bold">total price</td>
+                </tr>
+            </thead>
+            <tbody id="modal-add"></tbody>
+        </table>
+        <button id="close-modal" class="bg-red-500 text-white p-2">Close</button>
+    </div>
 
-  <div class="quantity-controls">
-    <button id="decrease">-</button>
-    <span id="quantity">0</span>
-    <button id="increase">+</button>
-  </div>
+    <script>
+        let buttons = document.querySelectorAll('.btn-div button');
+        let images = document.querySelectorAll('.img-div img');
+        let sqrBtn = document.querySelectorAll('.square-btn button');
+        let quantityBox = document.querySelectorAll('#quantity-div button');
+        const submit = document.querySelector('.submit');
+        let history = document.getElementById('history');
+        let count = 0;
 
-  <button id="add-to-cart">Add to Cart</button>
+        // Handle button clicks for color selection
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener('click', function () {
+                buttons.forEach(btn => btn.classList.remove('border-teal-500'));
+                buttons[i].classList.add('border-teal-500');
+                images.forEach(img => img.classList.add('hidden'));
+                images[i].classList.remove('hidden');
+            });
+        }
 
-  <div id="cart-info" class="hidden">
-    <p>Quantity: <span id="cart-quantity">0</span></p>
-    <p>Total Price: $<span id="cart-total-price">0</span></p>
-  </div>
+        // Handle square button size selection
+        for (let i = 0; i < sqrBtn.length; i++) {
+            sqrBtn[i].addEventListener('click', function () {
+                sqrBtn.forEach(btn => btn.classList.remove('border-teal-500'));
+                sqrBtn[i].classList.add('border-teal-500');
+            });
+        }
 
-  <div id="modal" class="hidden">
-    <p>Color: <span id="modal-color">Red</span></p>
-    <p>Price: $<span id="modal-price">60</span></p>
-    <p>Quantity: <span id="modal-quantity">0</span></p>
-    <p>Total Price: $<span id="modal-total-price">0</span></p>
-    <button id="close-modal">Close</button>
-  </div>
+        // Handle quantity increase and decrease
+        let plus = document.getElementById('plus');
+        let minus = document.getElementById('minus');
+        let result = document.getElementById('result');
 
-  <!-- JavaScript -->
-  <script>
-    // Circle button functionality
-    const circleBtns = document.querySelectorAll('.circle-btn');
-    const displayedImage = document.getElementById('displayed-image');
+        plus.addEventListener('click', function () {
+            count++;
+            result.innerText = count;
+        });
 
-    // Default values for modal
-    let selectedColor = 'Red';
-    let selectedPrice = 60;
+        minus.addEventListener('click', function () {
+            if (count > 0) {
+                count--;
+                result.innerText = count;
+            } else {
+                alert('Please enter a positive value');
+            }
+        });
 
-    circleBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        // Change image
-        displayedImage.src = btn.dataset.image;
+        // Handle "Add to Cart" button click
+        const modals = document.getElementById('modal');
+        let empty = [];
+        submit.addEventListener('click', function () {
+            if (count > 0) {
+                const hideBtn = document.getElementById('hide-btn');
+                hideBtn.classList.remove('hidden');
+                history.innerText = result.innerText;
+            } else {
+                alert('Please add quantity');
+            }
 
-        // Set red border on clicked button
-        circleBtns.forEach((btn) => btn.classList.remove('selected'));
-        btn.classList.add('selected');
+            // color finder
+            const colors = document.querySelector('button.border-teal-500:not(.p-4)');
+            const priceAndSize = document.querySelector('button.border-teal-500.p-4');
 
-        // Update color and price based on clicked button
-        selectedColor = btn.dataset.color;
-        selectedPrice = btn.dataset.price;
+            const array = priceAndSize.innerText.split(' ');
+            const prises = array[1].replace('$', '');
+            let total = parseInt(prises) * (result.innerText);
 
-        // Update modal with new color and price
-        document.getElementById('modal-color').textContent = selectedColor;
-        document.getElementById('modal-price').textContent = selectedPrice;
-      });
-    });
+            const sizes = array[0];
+            empty.push({
+                color: colors.id,
+                Quantity: result.innerText,
+                size: sizes,
+                price: total
+            });
 
-    // Quantity functionality
-    let quantity = 0;
-    const quantityDisplay = document.getElementById('quantity');
-    const cartQuantity = document.getElementById('cart-quantity');
-    const cartTotalPrice = document.getElementById('cart-total-price');
-    const increaseBtn = document.getElementById('increase');
-    const decreaseBtn = document.getElementById('decrease');
+            const modal = document.getElementById('modal-add');
+            modal.innerHTML = '';
+            for (const product of empty) {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><img src="assets/${product.color}.png" alt="product-image"></td>
+                    <td>${product.color}</td>
+                    <td>${product.Quantity}</td>
+                    <td>${product.price}</td>
+                `;
+                modal.appendChild(tr);
+            }
 
-    function updateTotalPrice() {
-      const totalPrice = selectedPrice * quantity;
-      cartTotalPrice.textContent = totalPrice;
-      document.getElementById('modal-total-price').textContent = totalPrice;
-    }
+            // Show modal
+            modals.classList.remove('hidden');
+        });
 
-    increaseBtn.addEventListener('click', () => {
-      quantity++;
-      quantityDisplay.textContent = quantity;
-      cartQuantity.textContent = quantity;
-      updateTotalPrice();
-    });
-
-    decreaseBtn.addEventListener('click', () => {
-      if (quantity > 0) {
-        quantity--;
-        quantityDisplay.textContent = quantity;
-        cartQuantity.textContent = quantity;
-        updateTotalPrice();
-      }
-    });
-
-    // Add to cart functionality
-    const addToCartBtn = document.getElementById('add-to-cart');
-    const cartInfo = document.getElementById('cart-info');
-
-    addToCartBtn.addEventListener('click', () => {
-      cartInfo.classList.remove('hidden');
-    });
-
-    // Modal functionality
-    cartInfo.addEventListener('click', () => {
-      const modal = document.getElementById('modal');
-      const modalQuantity = document.getElementById('modal-quantity');
-      
-      modalQuantity.textContent = quantity;
-      updateTotalPrice();
-
-      modal.classList.remove('hidden');
-    });
-
-    // Close the modal
-    const closeModalBtn = document.getElementById('close-modal');
-    closeModalBtn.addEventListener('click', () => {
-      document.getElementById('modal').classList.add('hidden');
-    });
-
-    // Close the modal if clicked outside
-    window.addEventListener('click', (event) => {
-      if (event.target === document.getElementById('modal')) {
-        document.getElementById('modal').classList.add('hidden');
-      }
-    });
-  </script>
+        // Close Modal
+        const closeModalButton = document.getElementById('close-modal');
+        closeModalButton.addEventListener('click', function () {
+            modals.classList.add('hidden');
+        });
+    </script>
 </body>
+
 </html>

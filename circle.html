@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +8,170 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.24/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="flex justify-between w-1/2">
+
+<body class="flex justify-between flex-col gap-10 w-1/2">
+    <!-- circle btn -->
     <div class="btn-div">
-        <button class="w-4 h-4 border-2 border-transparent rounded-full bg-orange-500"></button>
-        <button class="w-4 h-4 border-2 border-transparent rounded-full bg-blue-500"></button>
-        <button class="w-4 h-4 border-2 border-transparent rounded-full bg-teal-800"></button>
+        <button id="orange" class="w-4 h-4 border-2 border-transparent rounded-full bg-orange-500"></button>
+        <button id="blue" class="w-4 h-4 border-2 border-transparent rounded-full bg-blue-500"></button>
+        <button id="teal" class="w-4 h-4 border-2 border-transparent rounded-full bg-teal-800"></button>
     </div>
+    <!-- images -->
     <div class="flex  img-div">
         <img class="hidden" src="assets/send1.png" alt="">
         <img class="hidden" src="assets/Group.png" alt="">
         <img class="hidden" src="assets/transaction1.png" alt="">
     </div>
-    <script>
-      let buttons =  document.querySelectorAll('.btn-div button');
-      let images = document.querySelectorAll('.img-div img');
+    <!-- square btn -->
 
-      for(let i = 0;i<buttons.length;i++){
-         buttons[i].addEventListener('click',function(){
-            buttons.forEach(btn => btn.classList.remove('border-teal-200'));
-           buttons[i].classList.add('border-teal-200');
-           images.forEach(img => img.classList.add('hidden'));
-           images[i].classList.remove('hidden');
-         })
-      }
+    <div class="square-btn">
+        <button class="p-4 border-2 border-transparent bg-slate-200 border border-slate-400"> s $40</button>
+        <button class="p-4 border-2 border-transparent bg-slate-200 border border-slate-400"> m $42</button>
+        <button class="p-4 border-2 border-transparent bg-slate-200 border border-slate-400"> xl $44</button>
+        <button class="p-4 border-2 border-transparent bg-slate-200 border border-slate-400"> xxl $46</button>
+    </div>
+    <!-- +/-btn -->
+
+    <div id="quantity-div" class="flex w-32 p-2 text-xl justify-between items-center border-2 border-slate-300">
+        <button class="w-8" id="minus">-</button><span id="result">0</span><button class="w-8" id="plus">+</button>
+    </div>
+    <!-- cart btn -->
+    <div class="submit">
+        <button class="p-6 bg-orange-500">Add to cart</button>
+    </div>
+    <!-- hide button -->
+    <div>
+        <button id="hide-btn" class="bg-slate-200 p-2 hidden">Shopping details <span id="history"
+                class="w-10 inline-block rounded-full bg-orange-500 text-white">0</span></button>
+    </div>
+    <!-- modal -->
+    <div class="hidden" id="modal">
+        <table>
+            <thead>
+                <tr class="border-b">
+                    <td class="pr-10 font-bold">image</td>
+                    <td class="pr-10 font-bold">color</td>
+                    <td class="pr-10 font-bold">quantity</td>
+                    <td class="pr-10 font-bold">total price</td>
+                </tr>
+            </thead>
+            <tbody id="modal-add">
+
+            </tbody>
+        </table>
+        <button class="bg-red-300 rounded-lg" id="close-modal"> continue shopping</button>
+
+
+    </div>
+
+
+
+
+
+
+    <script>
+        let buttons = document.querySelectorAll('.btn-div button');
+        let images = document.querySelectorAll('.img-div img');
+        let sqrBtn = document.querySelectorAll('.square-btn button');
+        let quantityBox = document.querySelectorAll('#quantity-div button');
+        const submit = document.querySelector('.submit');
+        let history = document.getElementById('history');
+
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener('click', function () {
+                buttons.forEach(btn => btn.classList.remove('border-teal-500'));
+                buttons[i].classList.add('border-teal-500');
+                images.forEach(img => img.classList.add('hidden'));
+                images[i].classList.remove('hidden');
+            })
+        }
+        for (let i = 0; i < sqrBtn.length; i++) {
+            sqrBtn[i].addEventListener('click', function () {
+                sqrBtn.forEach(btn => btn.classList.remove('border-teal-500'));
+                sqrBtn[i].classList.add('border-teal-500');
+            })
+
+        }
+        let plus = document.getElementById('plus');
+        let minus = document.getElementById('minus');
+        let result = document.getElementById('result');
+        let count = 0;
+        plus.addEventListener('click', function () {
+            count++;
+            result.innerText = count;
+        })
+        minus.addEventListener('click', function () {
+            if (count > 0) {
+                count--;
+                result.innerText = count;
+
+            } else {
+                alert('Please enter a positive value');
+            }
+        })
+        const modals = document.getElementById('modal');
+        let empty = [];
+        submit.addEventListener('click', function () {
+            if (count > 0) {
+                const hideBtn = document.getElementById('hide-btn');
+                hideBtn.classList.remove('hidden');
+                history.innerText = result.innerText;
+            } else {
+                alert('Please add quantity');
+            }
+            // color finder
+            const colors = document.querySelector('button.border-teal-500:not(.p-4)');
+            const priceAndSize = document.querySelector('button.border-teal-500.p-4');
+
+            const array = priceAndSize.innerText.split(' ');
+            const prises = array[1].replace('$', '');
+            let total = parseInt(prises) * (result.innerText);
+
+            const sizes = array[0];
+            empty.push({
+                color: colors.id,
+                Quantity: result.innerText,
+                size: sizes,
+                price: total
+            })
+            const modal =  document.getElementById('modal-add');
+            modal.innerHTML ='';
+            for(const product of empty){
+                let tr = document.createElement('tr');
+               tr.innerHTML = `
+               <td class = 'border-b'>${product.color}</td>
+               <td class = 'border-b'>${product.Quantity}</td>
+               <td class = 'border-b'>${product.size}</td>
+               <td class = 'border-b'>${product.price}</td>
+
+               `;
+               modal.appendChild(tr);
+               
+
+                
+            }
+            document.getElementById('hide-btn').addEventListener('click',function(){
+                modals.classList.remove('hidden');
+            });
+            
+            document.getElementById('close-modal').addEventListener('click',function(){
+                modals.classList.add('hidden');
+            });
+
+
+           
+            
+
+
+
+
+        });
+
+
+
+
+
     </script>
 </body>
+
 </html>
